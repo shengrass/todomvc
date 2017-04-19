@@ -12,9 +12,9 @@ export class AppComponent {
     todo:string='';
     addTodo(){
       if(this.todo){
-        this.todos.push({
-          value: this.todo,
-          done: false });
+        //方法1 "..."this.todos 是用來展開 array
+        this.todos = [...this.todos, { value: this.todo, done: false }];
+        //方法2 this.todos.push({ value: this.todo, done: false });
       }
       this.todo = '';
     }
