@@ -20,7 +20,7 @@ export class AppComponent {
     this._dataService.getTodos().subscribe(res => {
       this.todos = res.json();
       this._dataService.todos = this.todos;
-      this.checkToggle();
+      this.checkToggle(true);
     });
   }
 
@@ -67,7 +67,7 @@ export class AppComponent {
     this._dataService.updateTodos()
   }
 
-  checkToggle() {
+  checkToggle(firstTime?) {
     console.log("isSelectAll", this.isSelectAll);
     //未完成的數量
     const length = this.todos.filter(item => item.done === this.isSelectAll).length;
@@ -76,7 +76,11 @@ export class AppComponent {
     //如果未完成的數量等於0 => 全選的checkbox為true(打勾)
     this.isSelectAll = length > 0 ? false : true;
     this._dataService.todos = this.todos;
-    this._dataService.updateTodos()
+    if(firstTime) {
+    }
+    else {
+      this._dataService.updateTodos();
+    }
   }
 
   removeItem(item) {
