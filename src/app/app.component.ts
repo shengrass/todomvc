@@ -10,6 +10,7 @@ export class AppComponent {
   col = 2;
   todos: any[] = [];
   todo: string = '';
+  filterType: string = 'all';
   addTodo() {
     if (this.todo) {
       //方法1 "..."this.todos 是用來展開 array
@@ -24,5 +25,9 @@ export class AppComponent {
     console.log("clearCompleted", $event);
     //只留下未完成的代辦事項
     this.todos = $event;
+  }
+
+  switchType(ft: string) {
+    this.filterType = ft;
   }
 }

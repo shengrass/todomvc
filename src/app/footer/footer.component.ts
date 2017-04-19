@@ -6,7 +6,10 @@ import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angu
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
+  switchT: string;
   @Output() clearCompleted = new EventEmitter();
+  @Output() switchFilterType = new EventEmitter();
+  tooMany = false;
   private _todos: any[];
   //接收父元件的todos
   @Input()
@@ -25,7 +28,6 @@ export class FooterComponent implements OnInit {
   get footerTodos() {
     return this._todos;
   }
-  tooMany = false;
   constructor() { }
   ngOnInit() {
     console.log(this.footerTodos);
@@ -37,6 +39,11 @@ export class FooterComponent implements OnInit {
     this.footerTodos = this.footerTodos.filter(item => item.done === false);
     //傳送一個訊號給上層的Component
     this.clearCompleted.emit(this.footerTodos);
+  }
+
+  switchType(value) {
+    this.switchT = value;
+    this.switchFilterType.emit(value)
   }
 
   // ngOnChanges() {
