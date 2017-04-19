@@ -23,6 +23,6 @@ export class AppComponent {
   clearCompleted($event) {
     console.log("clearCompleted", $event);
     //只留下未完成的代辦事項
-    this.todos = this.todos.filter(item => item.done === false);
+    this.todos = $event;
   }
 }
