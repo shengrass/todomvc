@@ -38,27 +38,41 @@ export class AppComponent {
   }
 
   toggleAll() {
+    console.log("isSelectAll", this.isSelectAll);
     if (this.isSelectAll) {
+      //把代辦事項的done都設為true
       this.todos.forEach(item => {
         item.done = true;
       });
     }
     else {
+      //把代辦事項的done都設為false
       this.todos.forEach(item => {
         item.done = false;
       });
     }
   }
+
   checkToggle() {
-    console.log("checkToggle");
+    console.log("isSelectAll", this.isSelectAll);
+    //未完成的數量
     const length = this.todos.filter(item => item.done === this.isSelectAll).length;
+    console.log("length", length);
+    //如果未完成的數量大於0 => 全選的checkbox為false(不打勾)
+    //如果未完成的數量等於0 => 全選的checkbox為true(打勾)
     this.isSelectAll = length > 0 ? false : true;
   }
 
   removeItem(item) {
+    //方法1
+    //找出item的index
     const index = this.todos.indexOf(item);
     //從Array移除元素
     this.todos.splice(index, 1);
+    //展開todos
     this.todos = [...this.todos];
+
+   //方法2
+   //this.todos = this.todos.filter(x => x != item);
   }
 }
