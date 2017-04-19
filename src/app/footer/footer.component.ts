@@ -33,6 +33,7 @@ export class FooterComponent implements OnInit {
 
   clearCompletedfromFooter() {
     console.log('clicked clear completed');
+    //只留下未完成的代辦事項
     this.footerTodos = this.footerTodos.filter(item => item.done === false);
     //傳送一個訊號給上層的Component
     this.clearCompleted.emit(this.footerTodos);
