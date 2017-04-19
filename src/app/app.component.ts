@@ -13,7 +13,9 @@ export class AppComponent {
 
     addTodo($event : HTMLInputElement){
       if($event.value){
-        this.todos.push(this.todo);
+        this.todos.push({
+          value: this.todo,
+          done: false });
       }
       this.todo = '';
     }
