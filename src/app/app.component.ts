@@ -17,4 +17,8 @@ export class AppComponent {
       }
       $event.value = '';
     }
+
+    todoChange(value){
+      this.todo = value;
+    }
 }
