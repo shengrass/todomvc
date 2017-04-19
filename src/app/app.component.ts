@@ -1,3 +1,4 @@
+import { DataService } from './data.service';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Component } from '@angular/core';
 
@@ -9,42 +10,18 @@ import { Component } from '@angular/core';
 export class AppComponent {
   inputHint = 'What needs to be done?';
   col = 2;
-  todos: any[] = []
-  // private _todos;
-  // set todos(value) {
-  //   this._todos = value;
-  //   this.updateTodos();
-  // };
-  // get todos() {
-  //   this.updateTodos();
-  //   return this._todos;
-  // }
+  todos: any[] = [];
+
   todo: string = '';
   filterType: string = 'all';
   isSelectAll = false;
-  requestOptions: RequestOptions = new RequestOptions({
-    headers: new Headers({
-      'authorization': 'token 825542c2-9848-4a97-8970-1a093e5cb808'
-    })
-  });
 
-  constructor(private _http: Http) {
-    this._http.get('./me/todomvc', this.requestOptions)
-      .subscribe(
-      res => {
-        console.log('下載完成!', res);
-        this.todos = res.json();
-        const length = this.todos.filter(item => item.done === this.isSelectAll).length;
-        this.isSelectAll = length > 0 ? false : true;
-      });
-  }
-
-  updateTodos() {
-    this._http.post('./me/todomvc', this.todos, this.requestOptions)
-      .subscribe(
-      res => {
-        console.log('更新完成!', res)
-      });
+  constructor(private _dataService: DataService) {
+    this._dataService.getTodos().subscribe(res => {
+      this.todos = res.json();
+      this._dataService.todos = this.todos;
+      this.checkToggle();
+    });
   }
 
   addTodo() {
@@ -53,7 +30,8 @@ export class AppComponent {
       this.todos = [...this.todos, { value: this.todo, done: false }];
       //方法2
       //this.todos.push({ value: this.todo, done: false });
-      this.updateTodos();
+      this._dataService.todos = this.todos;
+      this._dataService.updateTodos()
     }
     this.todo = '';
   }
@@ -63,7 +41,8 @@ export class AppComponent {
     console.log("clearCompleted", $event);
     //只留下未完成的代辦事項
     this.todos = $event;
-    this.updateTodos();
+    this._dataService.todos = this.todos;
+    this._dataService.updateTodos()
   }
 
   switchType(ft: string) {
@@ -84,7 +63,8 @@ export class AppComponent {
         item.done = false;
       });
     }
-    this.updateTodos();
+    this._dataService.todos = this.todos;
+    this._dataService.updateTodos()
   }
 
   checkToggle() {
@@ -95,7 +75,8 @@ export class AppComponent {
     //如果未完成的數量大於0 => 全選的checkbox為false(不打勾)
     //如果未完成的數量等於0 => 全選的checkbox為true(打勾)
     this.isSelectAll = length > 0 ? false : true;
-    this.updateTodos();
+    this._dataService.todos = this.todos;
+    this._dataService.updateTodos()
   }
 
   removeItem(item) {
@@ -106,9 +87,9 @@ export class AppComponent {
     this.todos.splice(index, 1);
     //展開todos
     this.todos = [...this.todos];
-
     //方法2
     //this.todos = this.todos.filter(x => x != item);
-    this.updateTodos();
+    this._dataService.todos = this.todos;
+    this._dataService.updateTodos()
   }
 }
