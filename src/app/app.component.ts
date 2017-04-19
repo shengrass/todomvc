@@ -13,12 +13,8 @@ export class AppComponent {
 
     addTodo($event : HTMLInputElement){
       if($event.value){
-        this.todos.push($event.value);
+        this.todos.push(this.todo);
       }
-      $event.value = '';
-    }
-
-    todoChange(value){
-      this.todo = value;
+      this.todo = '';
     }
 }
