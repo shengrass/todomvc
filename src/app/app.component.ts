@@ -20,7 +20,9 @@ export class AppComponent {
   }
 
   //收到 footerComponent 傳送的 emit() 後才會執行
-  clearCompleted() {
-    this.todos = this.todos.filter(item => item.done===false);
+  clearCompleted($event) {
+    console.log("clearCompleted", $event);
+    //只留下未完成的代辦事項
+    this.todos = this.todos.filter(item => item.done === false);
   }
 }

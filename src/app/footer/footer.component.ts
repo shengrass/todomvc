@@ -34,7 +34,7 @@ export class FooterComponent implements OnInit {
   clearCompletedfromFooter() {
     console.log('clicked clear completed');
     //傳送一個訊號給上層的Component
-    this.clearCompleted.emit();
+    this.clearCompleted.emit("abc");
   }
 
   // ngOnChanges() {
