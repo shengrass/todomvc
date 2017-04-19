@@ -10,9 +10,8 @@ export class AppComponent {
     col = 2;
     todos : any[] = [];
     todo:string='';
-
-    addTodo($event : HTMLInputElement){
-      if($event.value){
+    addTodo(){
+      if(this.todo){
         this.todos.push({
           value: this.todo,
           done: false });
