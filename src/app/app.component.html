@@ -23,7 +23,8 @@
   </section>
   <!-- This footer should hidden by default and shown when there are todos -->
   <!--把todos傳給子元件的footerTodos-->
-  <app-footer [footerTodos]="todos"></app-footer>
+  <!--把clearCompleted()方法傳給子元件的clearCompleted-->
+  <app-footer [footerTodos]="todos" (clearCompleted)="clearCompleted()"></app-footer>
 </section>
 <footer class="info">
   <p>Double-click to edit a todo</p>

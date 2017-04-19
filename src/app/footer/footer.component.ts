@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -6,6 +6,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
+  @Output() clearCompleted = new EventEmitter();
   private _todos: any[];
   //接收父元件的todos
   @Input()
@@ -28,6 +29,12 @@ export class FooterComponent implements OnInit {
   constructor() { }
   ngOnInit() {
     console.log(this.footerTodos);
+  }
+
+  clearCompletedfromFooter() {
+    console.log('clicked clear completed');
+    //傳送一個訊號給上層的Component
+    this.clearCompleted.emit();
   }
 
   // ngOnChanges() {
