@@ -11,10 +11,10 @@ export class AppComponent {
   inputHint = 'What needs to be done?';
   col = 2;
   todos: any[] = [];
-
   todo: string = '';
   filterType: string = 'all';
   isSelectAll = false;
+  editMode = -1;
 
   constructor(private _dataService: DataService) {
     this._dataService.getTodos().subscribe(res => {
@@ -31,7 +31,7 @@ export class AppComponent {
       //方法2
       //this.todos.push({ value: this.todo, done: false });
       this._dataService.todos = this.todos;
-      this._dataService.updateTodos()
+      this._dataService.updateTodos();
     }
     this.todo = '';
   }
@@ -42,7 +42,7 @@ export class AppComponent {
     //只留下未完成的代辦事項
     this.todos = $event;
     this._dataService.todos = this.todos;
-    this._dataService.updateTodos()
+    this._dataService.updateTodos();
   }
 
   switchType(ft: string) {
@@ -64,10 +64,10 @@ export class AppComponent {
       });
     }
     this._dataService.todos = this.todos;
-    this._dataService.updateTodos()
+    this._dataService.updateTodos();
   }
 
-  checkToggle(firstTime?) {
+  checkToggle(firstTime? : boolean) {
     console.log("isSelectAll", this.isSelectAll);
     //未完成的數量
     const length = this.todos.filter(item => item.done === this.isSelectAll).length;
@@ -94,6 +94,14 @@ export class AppComponent {
     //方法2
     //this.todos = this.todos.filter(x => x != item);
     this._dataService.todos = this.todos;
-    this._dataService.updateTodos()
+    this._dataService.updateTodos();
   }
+
+  saveItem(target: HTMLInputElement, item) {
+     const index = this.todos.indexOf(item);
+     this.todos[index].value = target.value;
+     this._dataService.todos = this.todos;
+     this._dataService.updateTodos();
+     this.editMode = -1;
+   }
 }
